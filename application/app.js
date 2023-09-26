@@ -12,5 +12,6 @@ app.use(express.json());
 app.use('/', userRoutes);
 
 //Error Handler
-app.use(globalEHandler);
+app.use(globalEHandler.nfHandeler);
+app.use(globalEHandler.geHandler);
 module.exports = app;
