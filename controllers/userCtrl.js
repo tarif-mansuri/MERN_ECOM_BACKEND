@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const bcryptjs = require('bcryptjs');
 const asyncHandler = require('express-async-handler');
+const generateToken = require('../utils/generateToken');
 
 // @desc   Register user
 // @route  POST /api/v1/users/register
@@ -52,7 +53,8 @@ const loginUserCOntroller = asyncHandler(
             res.json({
                 status : 'Success',
                 message : 'User found',
-                userFound
+                userFound,
+                token: generateToken(userFound?.id)
             })
             return;
         }else{

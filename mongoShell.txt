@@ -1,0 +1,17 @@
+To access mongo shell => mongosh
+show databases
+use database db_name
+show collections
+
+To see all the documents inside a collection => db.collection_name.find()
+
+exit
+
+Commands to install some Libraries
+
+ npm i bcryptjs
+ npm i dotenv
+ npm i express
+ npm i express-async-handler
+ npm i jsonwebtoken
+ npm i mongoose
