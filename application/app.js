@@ -9,7 +9,7 @@ dbConnect();
 const app = express();
 //pass json data
 app.use(express.json());
-app.use('/', userRoutes);
+app.use('/api/v1/users/', userRoutes);
 
 //Error Handler
 app.use(globalEHandler.nfHandeler);

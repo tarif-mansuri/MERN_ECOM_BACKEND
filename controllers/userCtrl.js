@@ -2,6 +2,8 @@ const User = require('../models/User');
 const bcryptjs = require('bcryptjs');
 const asyncHandler = require('express-async-handler');
 const generateToken = require('../utils/generateToken');
+const getToken = require('../utils/getTokenFromHeader');
+const verifyToken = require('../utils/verifyToken');
 
 // @desc   Register user
 // @route  POST /api/v1/users/register
@@ -63,3 +65,19 @@ const loginUserCOntroller = asyncHandler(
     }
 )
 module.exports.loginUserCOntroller = loginUserCOntroller;
+
+// @desc   User Profile
+// @route  POST /api/v1/users/profile
+// @access private
+
+module.exports.userProfile = asyncHandler(
+    async (req, res)=>{
+        const token = getToken(req);
+        const verifiedToken = verifyToken(token);
+        console.log(req);
+        //console.log(token);
+        res.json({
+            message:'Welcome to User Profile'
+        })
+    }
+)
