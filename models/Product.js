@@ -19,7 +19,7 @@ const productSchema = new Schema({
         ref: "Category",
         required: true
     },
-    size:{
+    sizes:{
         type: [String],
         enum: ["S", "M", "L", "XL", "XXL"],
         required: true
@@ -68,5 +68,5 @@ const productSchema = new Schema({
     }
 });
 
-const productModel = mongoose.model('productModel', productSchema);
+const productModel = mongoose.model('products', productSchema);
 module.exports = productModel;

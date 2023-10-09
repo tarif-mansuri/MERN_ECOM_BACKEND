@@ -4,6 +4,7 @@ use database db_name
 show collections
 
 To see all the documents inside a collection => db.collection_name.find()
+To drop the collection => db.collection_name.drop()
 
 exit
 
