@@ -130,3 +130,62 @@ module.exports.getProducts = expressAsyncHandler(
         })
     }
 )
+
+//@Desc fetch single products
+//@Route Get /api/v1/products/:id
+//Access Public
+
+module.exports.getProduct = expressAsyncHandler(
+    async (req, res)=>{
+        const product =await productModel.findById(req.params.id);
+        if(!product){
+            throw new Error('Product not found');
+        }else{
+            res.json({
+                status: "Success",
+                message: 'Product fetched Successfully',
+                product
+            }
+            )
+        }
+    }
+)
+
+//@Desc update single products
+//@Route Put /api/v1/products/:id
+//Access Admin
+
+module.exports.updateProduct = expressAsyncHandler(
+    async (req, res)=>{
+        const {name, description, category, sizes, colors, user, price, totalQty,brand} = req.body;
+        const product =await productModel.findByIdAndUpdate(req.params.id,{
+            name, description, category, sizes, colors, user, price, totalQty,brand
+        },{
+            new :true
+        });
+        if(!product){
+            throw new Error('Product not found');
+        }else{
+            res.json({
+                status: "Success",
+                message: 'Product Updated Successfully',
+                product
+            }
+            )
+        }
+    }
+)
+
+//@Desc delete single products
+//@Route Delete /api/v1/products/:id
+//Access Admin
+
+module.exports.deleteProduct = expressAsyncHandler(
+    async (req, res)=>{
+        await productModel.findByIdAndDelete(req.params.id);
+        res.json({
+            status: 'Success',
+            message: 'Product has been deleted successfully',
+        })
+    }
+)
