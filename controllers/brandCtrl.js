@@ -7,13 +7,13 @@ const expressAsyncHandler = require('express-async-handler');
 module.exports.createBrand = expressAsyncHandler(
     async (req, res)=>{
         const {name} = req.body;
-        const brandExists =await brandModel.findOne({name});
+        const brandExists =await brandModel.findOne({name : name.toLowerCase()});
         if(brandExists){
             throw new Error('Category already exists');
         }
 
         const brand = await brandModel.create({
-            name,
+            name : name.toLowerCase(),
             user: req.userAuthId
         })
 
@@ -68,7 +68,7 @@ module.exports.getBrand = expressAsyncHandler(
 module.exports.updateBrand = expressAsyncHandler(
     async (req, res)=>{
         const {name} = req.body;
-        const brand =await brandModel.findByIdAndUpdate(req.params.id, {name}, {new:true});
+        const brand =await brandModel.findByIdAndUpdate(req.params.id, {name:name.toLowerCase()}, {new:true});
         if(!brand){
             throw new Error('Brand does not exists');
         }

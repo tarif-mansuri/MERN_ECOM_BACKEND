@@ -8,13 +8,13 @@ const expressAsyncHandler = require('express-async-handler');
 module.exports.createCategory = expressAsyncHandler(
     async (req, res)=>{
         const {name} = req.body;
-        const categoryExists =await categoryModel.findOne({name});
+        const categoryExists =await categoryModel.findOne({name: name.toLowerCase()});
         if(categoryExists){
             throw new Error('Category already exists');
         }
 
         const category = await categoryModel.create({
-            name,
+            name: name.toLowerCase(),
             user: req.userAuthId
         })
 
@@ -69,7 +69,7 @@ module.exports.getCategory = expressAsyncHandler(
 module.exports.updateCategory = expressAsyncHandler(
     async (req, res)=>{
         const {name} = req.body;
-        const category =await categoryModel.findByIdAndUpdate(req.params.id, {name}, {new:true});
+        const category =await categoryModel.findByIdAndUpdate(req.params.id, {name:name.toLowerCase()}, {new:true});
         if(!category){
             throw new Error('Category do not exists');
         }

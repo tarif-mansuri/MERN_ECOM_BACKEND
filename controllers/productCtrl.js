@@ -1,25 +1,31 @@
 const expressAsyncHandler = require("express-async-handler");
 const productModel = require("../models/Product");
 const categoryModel = require("../models/Category");
+const brandModel = require('../models/Brand');
 
 //@Desc create a product
 //@Route POST /api/v1/products
 //Access Private/Admin
 module.exports.creatProduct = expressAsyncHandler(
     async (req, res)=>{
-        const {name, description, category, sizes, colors, user, price, totalQty,brand} = req.body;
+        const {name, description, category, sizes, colors, price, totalQty,brand} = req.body;
         const productExists = await productModel.findOne({name});
         if(productExists){
             throw new Error('Product exists');
         }
 
         //find the category
-        console.log(category);
-        const categoryFound = await categoryModel.findOne({name:category});
-        console.log(categoryFound);
+        const categoryFound = await categoryModel.findOne({name:category.toLowerCase()});
         if(!categoryFound){
             throw new Error('Provide a valid category');
         }
+
+        //find brand
+        const brandFound = await brandModel.findOne({name:brand.toLowerCase()});
+        if(!brandFound){
+            throw new Error('Provide a valid Brand');
+        }
+
         const product = await productModel.create({
             name,
             description,
@@ -31,10 +37,13 @@ module.exports.creatProduct = expressAsyncHandler(
             totalQty,
             brand
         });
-        //push the product into category
+        //push the product into category and resave category
         categoryFound.products.push(product._id);
-        //resave category
         await categoryFound.save();
+        
+        //push the product into brand and resave brand
+        brandFound.products.push(product._id);
+        await brandFound.save();
         res.json({
             status:'Success',
             message: "Product created Successfully",
