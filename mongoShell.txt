@@ -16,3 +16,11 @@ Commands to install some Libraries
  npm i express-async-handler
  npm i jsonwebtoken
  npm i mongoose
+
+
+CREATING A NEW EXPRESS JS SERVER/BACK END APP USE BELOW PROCESS/COMMANDS
+1. create a folder that will be the name of your app folder
+2. cd to that folder and hit >>npm init this will initiate node package manager
+3. hit >>npm i express this will install exxpress server
+4. nodemon start to start your server
+5. if you have clonned a project, hit npm install
